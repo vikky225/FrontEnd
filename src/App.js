@@ -1,25 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setWeatherData(null);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+  try {
+    const response = await axios.get(`https://khkrzcu935.execute-api.ap-southeast-2.amazonaws.com/dev/weather/${city}`);
+    setWeatherData(response.data);
+  } catch (err) {
+    console.error(err);
+    setError(`Error fetching weather data: ${err.message}`);
+  }
+};
